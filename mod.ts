@@ -1,5 +1,5 @@
-import { Curve25519 } from './../curve25519/mod.ts';
-import { SHA512 } from './../sha512/mod.ts';
+import { Curve25519 } from 'https://denopkg.com/chiefbiiko/curve25519@master/mod.ts';
+import { SHA512 } from 'https://denopkg.com/chiefbiiko/curve25519@master/mod.ts';
 import { compare, hex2bin, Signature } from './utils.ts';
 
 ///////////////////////////////////////////////////////////////////////////////

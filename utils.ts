@@ -1,5 +1,5 @@
 export interface Signature {
-  generateKeys(seed: Uint8Array): { sk: Uint8Array, pk: Uint8Array };
+  generateKeys(seed: Uint8Array): { sk: Uint8Array; pk: Uint8Array };
   sign(msg: Uint8Array, sk: Uint8Array, pk: Uint8Array): Uint8Array;
   verify(msg: Uint8Array, pk: Uint8Array, sig: Uint8Array): boolean;
   selftest(): boolean;
@@ -29,11 +29,11 @@ export function compare(lh: Uint8Array, rh: Uint8Array): boolean {
  * @return {Uint8Array} Byte array
  */
 export function hex2bin(hex: string): Uint8Array {
-  if (hex.indexOf('0x') === 0 || hex.indexOf('0X') === 0) {
+  if (hex.indexOf("0x") === 0 || hex.indexOf("0X") === 0) {
     hex = hex.substr(2);
   }
   if (hex.length % 2) {
-    hex += '0';
+    hex += "0";
   }
 
   let bin = new Uint8Array(hex.length >>> 1);

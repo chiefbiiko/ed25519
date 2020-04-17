@@ -1,9 +1,7 @@
 import {
-  runTests,
-  test,
   assert,
-  equal
-} from "https://deno.land/x/testing/mod.ts";
+  assertEquals,
+} from "https://deno.land/std@v0.41.0/testing/asserts.ts";
 
 import { Ed25519 } from "./mod.ts";
 
@@ -22,33 +20,33 @@ function xmod(buf: Uint8Array): Uint8Array {
 
 const enc: TextEncoder = new TextEncoder();
 
-test(function self() {
-  assert(new Ed25519().selftest());
+Deno.test(function self() {
+  assert(new Ed25519().selfDeno.test());
 });
 
-test(function generateSignVerify() {
+Deno.test(function generateSignVerify() {
   // alice and bob
   const a: party = {
     ed: new Ed25519(),
-    seed: enc.encode("whateverwhateverwhateverwhatever")
+    seed: enc.encode("whateverwhateverwhateverwhatever"),
   };
   const b: party = {
     ed: new Ed25519(),
-    seed: a.seed.map((byte: number) => byte - 1)
+    seed: a.seed.map((byte: number) => byte - 1),
   };
   // generating their keypairs
   Object.assign(a, a.ed.generateKeys(a.seed));
   Object.assign(b, b.ed.generateKeys(b.seed));
   // asserting key lengths
-  equal(a.pk.length, 32);
-  equal(b.pk.length, 32);
-  equal(a.sk.length, 64);
-  equal(b.sk.length, 64);
+  assertEquals(a.pk.length, 32);
+  assertEquals(b.pk.length, 32);
+  assertEquals(a.sk.length, 64);
+  assertEquals(b.sk.length, 64);
   // x-byte message
   const msg: Uint8Array = enc.encode("anansesem");
   // generating a signature
   const sig: Uint8Array = a.ed.sign(msg, a.sk, a.pk);
-  equal(sig.length, 64);
+  assertEquals(sig.length, 64);
   // verifying a signature
   assert(b.ed.verify(msg, a.pk, sig));
   // corrupting the verify inputs
@@ -60,5 +58,3 @@ test(function generateSignVerify() {
   assert(!b.ed.verify(xmsg, a.pk, sig));
   assert(!b.ed.verify(msg, xapk, sig));
 });
-
-runTests();

@@ -1,6 +1,6 @@
 export {
   Curve25519,
-} from "https://denopkg.com/chiefbiiko/curve25519@v0.1.0/mod.ts";
+} from "https://denopkg.com/chiefbiiko/curve25519@v0.2.0/mod.ts";
 
 export {
   SHA512,
